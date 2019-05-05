@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "PhysicsManager.h"
 #include "AnimationManager.h"
+#include "ScriptBehaviourManager.h"
 #include <memory>
 
 class Light_ver2;
@@ -15,7 +16,9 @@ public:
 		: graphicsManager(this, &timer.Time), 
 		sceneManager(this, &timer.Time), 
 		physicsManager(this, &timer.Time, &physicsBuffer),
-		animationManager(this, &timer.Time, &animatorBuffer) {}
+		animationManager(this, &timer.Time, &animatorBuffer),
+		scriptBehaviourManager(this, &timer.Time, &scriptBuffer) {}
+
 	bool Initialize(HINSTANCE hInstance, std::string window_title, std::string window_class, int width, int height);
 	bool ProcessMessage();
 	void Update();
@@ -34,7 +37,8 @@ public:
 
 private:
 	Timer timer;
-	Graphics graphicsManager;
+	ScriptBehaviourManager scriptBehaviourManager;
+	GraphicsManager graphicsManager;
 	SceneManager sceneManager;
 	PhysicsManager physicsManager;
 	AnimationManager animationManager;

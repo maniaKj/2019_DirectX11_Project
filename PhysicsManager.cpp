@@ -6,7 +6,7 @@ void PhysicsManager::Update()
 {
 	UpdateCollider();
 
-	TestCollider();
+	CollisionTest();
 }
 
 void PhysicsManager::UpdateCollider()
@@ -22,7 +22,7 @@ void PhysicsManager::UpdateCollider()
 	}
 }
 
-void PhysicsManager::TestCollider()
+void PhysicsManager::CollisionTest()
 {
 	typedef std::vector<std::shared_ptr<Collider>>::iterator ITERATOR;
 

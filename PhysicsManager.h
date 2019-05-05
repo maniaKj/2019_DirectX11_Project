@@ -18,7 +18,7 @@ private:
 
 	void Update();
 	void UpdateCollider();
-	void TestCollider();
+	void CollisionTest();
 
 	std::vector<std::shared_ptr<Collider>> * const colliderBuffer;
 	Engine * const engine;

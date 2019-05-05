@@ -36,29 +36,7 @@ bool Engine::Initialize(HINSTANCE hInstance, std::string window_title, std::stri
 		return false;
 	}
 
-	//graphicsManager.TestI();
-
-	//스크립트 Start() 실행
-	typedef std::vector<std::shared_ptr<ScriptBehaviour>>::iterator ScriptIterator;
-	typedef std::shared_ptr<ScriptBehaviour> Script_ptr;
-	ScriptIterator begin = scriptBuffer.begin();
-	ScriptIterator end = scriptBuffer.end();
-	for (ScriptIterator iter = begin; iter != end;) {
-		if ((*iter).use_count() <= 1) {
-			iter = scriptBuffer.erase(iter);
-			end = scriptBuffer.end();
-			continue;
-		}
-
-		Script_ptr script = (*iter);
-		
-		bool Component_valid = script.get()->enabled;
-		bool GameObject_valid = script.get()->gameObject->enabled;
-		if (Component_valid && GameObject_valid) {
-			script.get()->Start();
-		}
-		iter++;
-	}
+	scriptBehaviourManager.Start();
 
 	timer.Start();
 	return true;
@@ -81,31 +59,7 @@ void Engine::Update() {
 	}
 
 	animationManager.Update();
-
-	//게임오브젝트의 스크립트 컴포넌트에 대하여
-	//Update() 실행
-	typedef std::vector<std::shared_ptr<ScriptBehaviour>>::iterator ScriptIterator;
-	typedef std::shared_ptr<ScriptBehaviour> Script_ptr;
-	ScriptIterator begin = scriptBuffer.begin();
-	ScriptIterator end = scriptBuffer.end();
-	for (ScriptIterator iter = begin; iter != end;) {
-		if ((*iter).use_count() <= 1) {
-			iter = scriptBuffer.erase(iter);
-			end = scriptBuffer.end();
-			continue;
-		}
-
-		Script_ptr script = (*iter);
-
-		bool Component_valid = script.get()->enabled;
-		bool GameObject_valid = script.get()->gameObject->enabled;
-		if (Component_valid && GameObject_valid) {
-			script.get()->Update();
-		}
-		iter++;
-	}
-
-	
+	scriptBehaviourManager.Update();
 
 #pragma region Input Event
 	//키보드, 마우스 입력값 정보
